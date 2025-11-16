@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { increaseQty, decreaseQty, deleteItem } from "../store/cartSlice";
 import { Link } from "react-router-dom";
+import "./CartPage.css";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -23,104 +24,95 @@ export default function CartPage() {
   );
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h1>Shopping Cart</h1>
+    <div className="cart-container">
+      <h1>🛒 Shopping Cart</h1>
 
-      <h3>Total Items: {totalQty}</h3>
-      <h3>Total Cost: ${totalCost.toFixed(2)}</h3>
+      <div className="cart-summary">
+        <h3>Total Items: {totalQty}</h3>
+        <h3>Total Cost: ${totalCost.toFixed(2)}</h3>
+      </div>
 
-      <Link
-        to="/products"
-        style={{
-          display: "inline-block",
-          background: "#28a745",
-          color: "white",
-          padding: "10px 15px",
-          borderRadius: "5px",
-          textDecoration: "none",
-          marginBottom: "20px",
-        }}
-      >
+      <Link to="/products" className="continue-shopping-btn">
         ← Continue Shopping
       </Link>
 
-      <div>
+      <div className="cart-items">
         {cartItems.length === 0 ? (
-          <p>Your cart is empty.</p>
+          <div className="empty-cart">
+            <p>Your cart is empty. Start shopping to add items!</p>
+          </div>
         ) : (
           cartItems.map((item) => (
-            <div
-              key={item.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "20px",
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                background: "#f9f9f9",
-              }}
-            >
+            <div key={item.id} className="cart-item">
               <img
                 src={item.image}
                 alt={item.name}
-                width="90"
-                style={{ marginRight: "20px", borderRadius: "5px" }}
               />
 
-              <div style={{ flex: 1 }}>
+              <div className="item-details">
                 <h3>{item.name}</h3>
-                <p>${item.price}</p>
+                <p>Price: ${item.price}</p>
 
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div className="quantity-controls">
                   <button
+                    className="qty-btn"
                     onClick={() => dispatch(decreaseQty(item.id))}
-                    style={{ padding: "5px 10px", marginRight: "10px" }}
                   >
-                    -
+                    −
                   </button>
 
-                  <span>{item.quantity}</span>
+                  <span className="qty-display">{item.quantity}</span>
 
                   <button
+                    className="qty-btn"
                     onClick={() => dispatch(increaseQty(item.id))}
-                    style={{ padding: "5px 10px", marginLeft: "10px" }}
                   >
                     +
                   </button>
                 </div>
               </div>
 
+              <div className="item-total">
+                ${(item.price * item.quantity).toFixed(2)}
+              </div>
+
               <button
+                className="delete-btn"
                 onClick={() => dispatch(deleteItem(item.id))}
-                style={{
-                  marginLeft: "20px",
-                  background: "red",
-                  color: "white",
-                  padding: "8px 12px",
-                  border: "none",
-                  borderRadius: "5px",
-                }}
               >
-                Delete
+                Remove
               </button>
             </div>
           ))
         )}
       </div>
 
-      <button
-        style={{
-          background: "black",
-          color: "white",
-          padding: "10px 20px",
-          borderRadius: "5px",
-          marginTop: "20px",
-        }}
-        onClick={() => alert("Checkout Coming Soon!")}
-      >
-        Checkout
-      </button>
+      {cartItems.length > 0 && (
+        <button
+          className="checkout-btn"
+          style={{
+            background: "#0a4d23",
+            color: "white",
+            padding: "14px 28px",
+            borderRadius: "6px",
+            marginTop: "30px",
+            fontSize: "1.1rem",
+            fontWeight: "600",
+            border: "none",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            width: "100%",
+            maxWidth: "300px",
+            display: "block",
+            margin: "30px auto 0",
+          }}
+          onClick={() => alert("Checkout Coming Soon!")}
+          onMouseEnter={(e) => e.target.style.background = "#073620"}
+          onMouseLeave={(e) => e.target.style.background = "#0a4d23"}
+        >
+          Proceed to Checkout
+        </button>
+      )}
     </div>
   );
 }

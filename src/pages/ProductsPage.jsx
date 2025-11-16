@@ -1,9 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../store/cartSlice";
+import "./ProductsPage.css";
 
 export default function ProductPage() {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart.cart);
+  const cart = useSelector((state) => state.cart.items);
 
   const plants = [
     {
@@ -50,41 +52,36 @@ export default function ProductPage() {
     },
   ];
 
-  function addToCart(item) {
-    dispatch({ type: "ADD_TO_CART", payload: item });
+  function addToCartHandler(item) {
+    dispatch(addToCart(item));
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Products</h1>
+    <div className="products-container">
+      <h1>Our Products</h1>
 
-      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+      <div className="products-grid">
         {plants.map((p) => (
-          <div
-            key={p.id}
-            style={{
-              width: "200px",
-              padding: "10px",
-              border: "1px solid #ccc",
-              borderRadius: "10px",
-            }}
-          >
+          <div key={p.id} className="product-card">
             <img
               src={p.image}
               alt={p.name}
-              style={{ width: "100%", borderRadius: "10px" }}
             />
-            <h3>{p.name}</h3>
-            <p>${p.price}</p>
+            <div className="product-info">
+              <h3>{p.name}</h3>
+              <p className="category">{p.category}</p>
+              <p className="product-price">${p.price}</p>
 
-            <button
-              disabled={cart.find((x) => x.id === p.id)}
-              onClick={() => addToCart(p)}
-            >
-              {cart.find((x) => x.id === p.id)
-                ? "Added"
-                : "Add to Cart"}
-            </button>
+              <button
+                className="add-to-cart-btn"
+                disabled={cart[p.id]}
+                onClick={() => addToCartHandler(p)}
+              >
+                {cart[p.id]
+                  ? "✓ Added"
+                  : "Add to Cart"}
+              </button>
+            </div>
           </div>
         ))}
       </div>
