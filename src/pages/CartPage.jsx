@@ -78,7 +78,11 @@ export default function CartPage() {
 
               <button
                 className="delete-btn"
-                onClick={() => dispatch(deleteItem(item.id))}
+                onClick={() => {
+                  if (window.confirm(`Remove ${item.name} from cart?`)) {
+                    dispatch(deleteItem(item.id));
+                  }
+                }}
               >
                 Remove
               </button>

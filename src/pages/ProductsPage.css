@@ -1,7 +1,10 @@
+
 .products-container {
   padding: 40px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100vw;
+  min-height: 100vh;
+  background: url('/assets/bg-nursery.jpg') center center / cover no-repeat;
+  position: relative;
 }
 
 .products-container h1 {
@@ -13,8 +16,9 @@
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
+  width: 100%;
 }
 
 .product-card {

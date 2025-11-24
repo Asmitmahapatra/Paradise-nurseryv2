@@ -1,7 +1,19 @@
+.hero-animate {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+}
+.hero-animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 .landing-container {
-  background: linear-gradient(135deg, #0a4d23 0%, #1a7d3d 50%, #0a4d23 100%);
-  min-height: calc(100vh - 60px);
-  width: 100%;
+  background:
+    url('/assets/bg-nursery.jpg') center center / cover no-repeat;
+  background-color: #0a4d23;
+  min-height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,11 +35,12 @@
 }
 
 .overlay {
-  background: rgba(10, 77, 35, 0.85);
+  background: rgba(10, 77, 35, 0.65);
   padding: 60px 50px;
   border-radius: 15px;
   text-align: center;
   color: white;
+  width: 100%;
   max-width: 600px;
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
